@@ -1,0 +1,82 @@
+{
+  "version": " 0.1.0 ",
+  "configurations": [
+      {
+        "name": "Attach Main Process",
+        "type": "node",
+        "request": "attach",
+        "sourceMaps": true,
+        "address": "localhost",
+        "port": 5858,
+        "localRoot": "${workspaceRoot}",
+        "remoteRoot": "${workspaceRoot}"
+      },
+      {
+        "name": "Electron Renderer",
+        "type": "chrome",
+        "request": "launch",
+        "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+        "windows": {
+          "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
+        },
+        "runtimeArgs": ["${workspaceRoot}", "--remote-debugging-port=9222"],
+        "sourceMaps": true,
+        "webRoot": "${workspaceRoot}"
+      },
+
+
+      {
+          "name": "Debug Renderer Process",
+          "type": "chrome",
+          "request": "launch",
+          "sourceMaps": true ,
+          "webRoot": "${workspaceRoot}",
+          "timeout": 5000,
+          "url" :"http://localhost:3000"
+      },
+      {
+          "name": "Debug Main Process",
+          "type": "pwa-node",
+          "request": "launch",
+          "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+          "windows": {
+            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
+          } ,
+          "runtimeArgs": [
+            ".",
+            "--remote-debugging-port=9222"
+          ],
+          "program": "${workspaceRoot}/main.js",
+        },
+        {
+          "type": "chrome",
+          "request": "attach",
+          "name": "Attach Render Process",
+          "port": 9222,
+          "webRoot": "${workspaceRoot}"
+      },
+
+    //       {
+    //   "type": "node",
+    //   "request": "attach",
+    //   "name": "Attach to Main Process",
+    //   "address": "localhost",
+    //   "port": 5858,
+    //   "localRoot": "${workspaceRoot}",
+    //   "remoteRoot": "${workspaceRoot}"
+    // },
+    // {
+    //   "type": "chrome",
+    //   "request": "attach",
+    //   "name": "Attach to Render process",
+    //   "port": 9222,
+    //   "webRoot": "${workspaceRoot}/html"
+    // }
+   ],
+   "compounds": [
+    {
+      "name": "Electron: All",
+      "configurations": ["Debug Main Process", "Attach Render Process"]
+    }
+  ]
+}
